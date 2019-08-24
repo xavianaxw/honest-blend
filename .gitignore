@@ -1,0 +1,41 @@
+# Folders
+.git/
+node_modules/
+public/
+build/
+test/
+
+# Logs
+logs
+*.log
+
+# Hidden Files
+Desktop.ini
+.DS_Store
+.sass-cache
+.publish
+.env
+.env*
+.webpack
+.serverless
+.eslintcache
+.yarn-integrity
+**/generated/_icons.sass
+
+# Wordpress Ignores (uncomment if applicable)
+# wp/wp-config.php
+# wp/wp-content/uploads
+# wp/wp-content/themes/project/assets/
+
+# Craft Ignores (uncomment if applicable)
+# craft/.env
+# craft/.idea
+# craft/vendor
+# craft/web/assets/
+# craft/web/uploads/
+# craft/web/cpresources/*
+# craft/backups/*
+
+# Ignore SQL files except project's SQL
+*.sql
+!project.sql
