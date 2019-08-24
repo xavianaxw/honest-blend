@@ -1,0 +1,22 @@
+{
+  "name": "honest-blend",
+  "description": "A blend of front end tools to use for work at Honest Fox.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Xavian Ang <xavianaxw@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "gulp": "^4.0.2",
+    "minimist": "^1.2.0"
+  },
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "dependencies": {
+    "core-js": "^3.2.1",
+    "regenerator-runtime": "^0.13.3"
+  }
+}
