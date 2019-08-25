@@ -6,10 +6,15 @@
   "author": "Xavian Ang <xavianaxw@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "gulp": "^4.0.2",
-    "minimist": "^1.2.0"
+    "gulp-autoprefixer": "^7.0.0",
+    "gulp-if": "^3.0.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5"
   },
   "scripts": {
     "start": "gulp",
