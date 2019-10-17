@@ -7,7 +7,9 @@ export default {
     dest: "stylesheets",
   },
 
-  // javascripts
+  javascripts: {
+    
+  },
 
   templates: {
     src: "templates",
