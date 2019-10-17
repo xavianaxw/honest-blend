@@ -20,7 +20,7 @@ export default {
     cssnano: {},
   },
 
-  // javascripts
+  javascripts: {},
 
   templates: {
     engine: "nunjucks", // or nunjucks

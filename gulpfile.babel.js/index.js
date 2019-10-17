@@ -9,10 +9,11 @@ global.PATHS = paths;
 global.TASKS = tasks;
 
 // Tasks
-import { serve } from "./tasks/browser-sync";
+import { serve, reload } from "./tasks/browser-sync";
 import { cleanAll, cleanStyles, cleanTemplates } from "./tasks/clean";
 import { styles } from "./tasks/stylesheets";
 import { templates } from "./tasks/templates";
+import { scripts } from "./tasks/scripts";
 
 // Helpers
 import pathBuilder from "./helpers/path-builder";
@@ -21,21 +22,23 @@ import pathBuilder from "./helpers/path-builder";
 var argv = require('minimist')(process.argv.slice(2));
 
 global.production = argv.production;
+global.isProduction = argv.production;
 
 // Commands
 // gulp
 // export default series(styles);
 export default series(
   cleanAll,
-  parallel(styles, templates),
+  parallel(styles, templates, scripts),
   serve,
   function watcher() {
     watch(pathBuilder(PATHS.src, PATHS.stylesheets.src, "**/*.scss"), series(cleanStyles, styles));
-    watch(pathBuilder(PATHS.src, PATHS.templates.src, "**/*.{html,twig,njk}"), series(cleanTemplates, templates));
+    watch(pathBuilder(PATHS.src, PATHS.templates.src, "**/*.{html,twig,njk}"), series(cleanTemplates, templates, reload));
+    watch(pathBuilder(PATHS.src, PATHS.javascripts.src, "**/*.{js,jsx}"), series(scripts, reload));
   }
 )
 
 export const build = series(
   cleanAll,
-  parallel(styles, templates),
+  parallel(styles, templates, scripts),
 );

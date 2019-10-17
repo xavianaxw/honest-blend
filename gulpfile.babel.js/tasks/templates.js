@@ -14,6 +14,7 @@ export function templates() {
 
   return gulp
     .src(pathBuilder(PATHS.src, PATHS.templates.src, "**/*.{html,twig,njk}"))
+    .on('error', errorHandler)
     .pipe(gulpif(engine === "twig", twig(twigOptions)))
     .pipe(gulpif(engine === "nunjucks", nunjucksRender(nunjucksOptions)))
     .on('error', errorHandler)

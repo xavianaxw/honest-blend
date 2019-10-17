@@ -14,6 +14,7 @@ import errorHandler from "../helpers/error-handler";
 export function styles() {
   return gulp
     .src(pathBuilder(PATHS.src, PATHS.stylesheets.src, "**/*.scss"))
+    .on('error', errorHandler)
     .pipe(gulpif(!global.production, sourcemaps.init()))
     .pipe(sass(TASKS.stylesheets.sass))
     .on('error', errorHandler)

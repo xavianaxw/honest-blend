@@ -8,7 +8,8 @@ export default {
   },
 
   javascripts: {
-    
+    src: "javascripts",
+    dest: "javascripts",
   },
 
   templates: {
