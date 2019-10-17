@@ -9,6 +9,11 @@ import tasks from "./gulpfiles/config/tasks";
 global.PATHS = paths;
 global.TASKS = tasks;
 
+// Fetch arguments from CLI
+var argv = require('minimist')(process.argv.slice(2));
+
+global.production = argv.production;
+
 // Commands
 // gulp
 export default series(styles);

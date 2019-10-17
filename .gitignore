@@ -1,5 +1,7 @@
 # Folders
 .git/
+.vagrant/
+.vscode/
 node_modules/
 public/
 build/
@@ -39,3 +41,11 @@ Desktop.ini
 # Ignore SQL files except project's SQL
 *.sql
 !project.sql
+
+# Ignore .crt and .key for SSL
+*.crt
+*.key
+
+
+# Ignore Homestead.yaml
+Homestead.yaml

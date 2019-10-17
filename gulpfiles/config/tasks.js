@@ -7,12 +7,16 @@
 export default {
   stylesheets: {
     sass: {
-      includePaths: ["./node_modules"]
+      includePaths: ["./node_modules"],
     },
     stylelint: {
       failAfterError: true,
       reports: [{ formatter: "verbose", console: true }],
-      syntax: "scss"
-    }
-  }
+      syntax: "scss",
+    },
+    autoprefixer: {
+      grid: "no-autoplace",
+    },
+    cssnano: {},
+  },
 };
