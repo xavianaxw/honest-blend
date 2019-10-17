@@ -4,11 +4,16 @@ export default {
 
   stylesheets: {
     src: "stylesheets",
-    dest: "stylesheets"
-  }
+    dest: "stylesheets",
+  },
 
   // javascripts
-  // templates
+
+  templates: {
+    src: "templates",
+    dest: ".",
+  },
+
   // images
   // icons
   // fonts

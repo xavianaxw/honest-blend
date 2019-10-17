@@ -19,4 +19,31 @@ export default {
     },
     cssnano: {},
   },
+
+  // javascripts
+
+  templates: {
+    engine: "nunjucks", // or nunjucks
+
+    // https://www.npmjs.com/package/gulp-twig#options
+    twig: {},
+
+    // https://www.npmjs.com/package/gulp-nunjucks-render#options
+    nunjucks: {
+      envOptions: {
+        watch: false
+      }
+    },
+
+    // https://github.com/kangax/html-minifier#options-quick-reference
+    htmlmin: {
+      collapseWhitespace: true,
+    },
+  },
+
+  // images
+  // icons
+  // fonts
+  // static
+  // svg?
 };

@@ -8,5 +8,9 @@ export function cleanAll() {
 }
 
 export function cleanStyles() {
-  return del([ pathBuilder(PATHS.stylesheets.dest) ]);
+  return del([ pathBuilder(PATHS.dest, PATHS.stylesheets.dest) ]);
+}
+
+export function cleanTemplates() {
+  return del([ pathBuilder(PATHS.dest, PATHS.templates.dest, "**/*.html") ]);
 }

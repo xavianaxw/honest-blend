@@ -1,11 +1,11 @@
 import gulp from "gulp";
+import gulpif from "gulp-if";
+import browserSync from "browser-sync";
 import sass from "gulp-sass";
 import postcss from "gulp-postcss";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import sourcemaps from "gulp-sourcemaps";
-import gulpif from "gulp-if";
-import browserSync from "browser-sync";
 
 // Helpers
 import pathBuilder from "../helpers/path-builder";

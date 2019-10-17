@@ -10,8 +10,9 @@ global.TASKS = tasks;
 
 // Tasks
 import { serve } from "./gulpfiles/tasks/browser-sync";
-import { cleanAll, cleanStyles } from "./gulpfiles/tasks/clean";
+import { cleanAll, cleanStyles, cleanTemplates } from "./gulpfiles/tasks/clean";
 import { styles } from "./gulpfiles/tasks/stylesheets";
+import { templates } from "./gulpfiles/tasks/templates";
 
 // Helpers
 import pathBuilder from "./gulpfiles/helpers/path-builder";
@@ -25,15 +26,16 @@ global.production = argv.production;
 // gulp
 // export default series(styles);
 export default series(
-  // clean,
-  parallel(styles),
+  cleanAll,
+  parallel(styles, templates),
   serve,
   function watcher() {
     watch(pathBuilder(PATHS.src, PATHS.stylesheets.src, "**/*.scss"), series(cleanStyles, styles));
+    watch(pathBuilder(PATHS.src, PATHS.templates.src, "**/*.{html,twig,njk}"), series(cleanTemplates, templates));
   }
 )
 
 export const build = series(
-  // clean
-  parallel(styles),
+  cleanAll,
+  parallel(styles, templates),
 );
