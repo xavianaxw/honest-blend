@@ -1,21 +1,21 @@
 import { series, watch, parallel } from "gulp";
 
 // Configuration files
-import paths from "./gulpfiles/config/paths";
-import tasks from "./gulpfiles/config/tasks";
+import paths from "./config/paths";
+import tasks from "./config/tasks";
 
 // Globally expose config objects
 global.PATHS = paths;
 global.TASKS = tasks;
 
 // Tasks
-import { serve } from "./gulpfiles/tasks/browser-sync";
-import { cleanAll, cleanStyles, cleanTemplates } from "./gulpfiles/tasks/clean";
-import { styles } from "./gulpfiles/tasks/stylesheets";
-import { templates } from "./gulpfiles/tasks/templates";
+import { serve } from "./tasks/browser-sync";
+import { cleanAll, cleanStyles, cleanTemplates } from "./tasks/clean";
+import { styles } from "./tasks/stylesheets";
+import { templates } from "./tasks/templates";
 
 // Helpers
-import pathBuilder from "./gulpfiles/helpers/path-builder";
+import pathBuilder from "./helpers/path-builder";
 
 // Fetch arguments from CLI
 var argv = require('minimist')(process.argv.slice(2));
