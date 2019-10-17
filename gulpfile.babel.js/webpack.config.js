@@ -1,40 +1,25 @@
 import webpack from 'webpack';
 
-// Config
-// import { paths } from "./gulpfile.babel.js/config";
-
-// const path = require('path');
-
-// Plugins
-// var WebpackNotifierPlugin = require('webpack-notifier');
-
 // Helpers
+import path from "path";
 import pathBuilder from "./helpers/path-builder";
+import ensureLeadingDot from "./helpers/ensure-leading-dot";
+import pathToUrl from "./helpers/path-to-url";
+
+const jsSrc = pathBuilder(PATHS.src, PATHS.javascripts.src);
+const jsDest = pathBuilder(PATHS.dest, PATHS.javascripts.dest);
+const publicPath = pathToUrl(TASKS.javascripts.publicPath || PATHS.javascripts.dest, '/')
 
 const webpackConfig = {
-  context: pathBuilder(PATHS.src, PATHS.javascripts.src),
-  mode: isProduction ? "production" : "development",
+  context: jsSrc,
 
-  entry: {
-    app: ["./app.js"]
-  },
+  entry: TASKS.javascripts.entry,
 
   output: {
+    path: path.normalize(jsDest),
     filename: '[name].js',
+    publicPath,
   },
-
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       commons: {
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendor',
-  //         chunks: 'all',
-  //         minSize: 0
-  //       }
-  //     }
-  //   }
-  // },
 
   module: {
     rules: [
@@ -48,44 +33,47 @@ const webpackConfig = {
           }
         }
       },
-      // {
-      //   test: /\.s?css$/,
-      //   include: /node_modules/,
-      //   use: [
-      //     'style-loader',
-      //     'css-loader',
-      //     'sass-loader',
-      //   ],
-      // }
+      ...TASKS.javascripts.loaders,
     ]
   },
 
   plugins: [
-    // ensure that we get a production build of any dependencies
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': '"production"'
-    // }),
-    // new WebpackNotifierPlugin({
-    //   skipFirstNotification: true
-    // })
+    // Provide global objects to imported modules to resolve dependencies (e.g. jquery)
+    new webpack.ProvidePlugin(TASKS.javascripts.provide),
+    TASKS.javascripts.plugins,
   ],
 
   resolve: {
-    // alias: {
-    //   Modules: path.resolve(__dirname, 'src/modules/'),
-    //   Components: path.resolve(__dirname, 'src/scripts/components/'),
-    //   Utils: path.resolve(__dirname, 'src/scripts/utils/'),
-    // }
+    extensions: TASKS.javascripts.extensions.map(ensureLeadingDot),
+    alias: TASKS.javascripts.alias,
+    modules: [jsSrc, pathBuilder('node_modules')],
   }
 
 };
 
-// if (process.env.NODE_ENV === 'production') {
-//   // console.log('Welcome to production');
-//   webpackConfig.devtool = 'source-map';
-// }
-// if (process.env.NODE_ENV === 'development') {
-//   // console.log('Welcome to development');
-// }
+if (isProduction) {
+  const uglifyConfig = TASKS.javascripts.production.uglifyJsPlugin
+  webpackConfig.devtool = TASKS.javascripts.production.devtool;
+
+  // enable sourcemap if devtool is defined
+
+  if (webpackConfig.devtool) {
+    uglifyConfig.sourceMap = true
+  }
+
+  webpackConfig.plugins.push(
+    new webpack.DefinePlugin(TASKS.javascripts.production.define),
+    new webpack.optimize.UglifyJsPlugin(uglifyConfig),
+    new webpack.NoEmitOnErrorsPlugin(),
+    ...TASKS.javascripts.production.plugins,
+  );
+} else {
+  webpackConfig.devtool = TASKS.javascripts.development.devtool;
+
+  webpackConfig.plugins.push(
+    new webpack.DefinePlugin(TASKS.javascripts.development.define),
+    ...TASKS.javascripts.development.plugins,
+  );
+}
 
 module.exports = webpackConfig;

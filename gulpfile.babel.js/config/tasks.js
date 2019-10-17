@@ -6,6 +6,7 @@
 
 export default {
   stylesheets: {
+    extensions: ["css, scss"],
     sass: {
       includePaths: ["./node_modules"],
     },
@@ -20,7 +21,40 @@ export default {
     cssnano: {},
   },
 
-  javascripts: {},
+  javascripts: {
+    extensions: ['js', 'jsx'],
+
+    entry: {
+      app: ["./app.js"],
+    },
+
+    // needed only if path differs from path config
+    // publicPath: "",
+
+    provide: {},
+
+    alias: {},
+
+    loaders: [],
+
+    plugins: [],
+
+    development: {
+      devtool: 'eval-cheap-module-source-map',
+      definePlugin: {},
+      plugins: [],
+    },
+
+    // production only settings
+    production: {
+      devtool: false,
+      definePlugin: {
+        "isProduction": true,
+      },
+      uglifyJsPlugin: {},
+      plugins: [],
+    },
+  },
 
   templates: {
     engine: "nunjucks", // or nunjucks
