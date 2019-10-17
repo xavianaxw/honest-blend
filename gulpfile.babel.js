@@ -10,6 +10,7 @@ global.TASKS = tasks;
 
 // Tasks
 import { serve } from "./gulpfiles/tasks/browser-sync";
+import { cleanAll, cleanStyles } from "./gulpfiles/tasks/clean";
 import { styles } from "./gulpfiles/tasks/stylesheets";
 
 // Helpers
@@ -27,8 +28,8 @@ export default series(
   // clean,
   parallel(styles),
   serve,
-  () => {
-    watch(pathBuilder(PATHS.src, PATHS.stylesheets.src, "**/*.scss"), series(styles));
+  function watcher() {
+    watch(pathBuilder(PATHS.src, PATHS.stylesheets.src, "**/*.scss"), series(cleanStyles, styles));
   }
 )
 
