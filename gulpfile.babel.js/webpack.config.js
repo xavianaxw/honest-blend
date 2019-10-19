@@ -12,7 +12,7 @@ const publicPath = pathToUrl(TASKS.javascripts.publicPath || PATHS.javascripts.d
 
 const webpackConfig = {
   context: jsSrc,
-
+  mode: isProduction ? 'production' : 'development',
   entry: TASKS.javascripts.entry,
 
   output: {
@@ -40,7 +40,7 @@ const webpackConfig = {
   plugins: [
     // Provide global objects to imported modules to resolve dependencies (e.g. jquery)
     new webpack.ProvidePlugin(TASKS.javascripts.provide),
-    TASKS.javascripts.plugins,
+    ...TASKS.javascripts.plugins,
   ],
 
   resolve: {
@@ -62,7 +62,7 @@ if (isProduction) {
   }
 
   webpackConfig.plugins.push(
-    new webpack.DefinePlugin(TASKS.javascripts.production.define),
+    new webpack.DefinePlugin(TASKS.javascripts.production.definePlugin),
     new webpack.optimize.UglifyJsPlugin(uglifyConfig),
     new webpack.NoEmitOnErrorsPlugin(),
     ...TASKS.javascripts.production.plugins,
@@ -71,7 +71,7 @@ if (isProduction) {
   webpackConfig.devtool = TASKS.javascripts.development.devtool;
 
   webpackConfig.plugins.push(
-    new webpack.DefinePlugin(TASKS.javascripts.development.define),
+    new webpack.DefinePlugin(TASKS.javascripts.development.definePlugin),
     ...TASKS.javascripts.development.plugins,
   );
 }

@@ -13,7 +13,7 @@ export function templates() {
   const { engine, twig: twigOptions, nunjucks: nunjucksOptions } = TASKS.templates;
 
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.templates.src, "**/*.{html,twig,njk}"))
+    .src(pathBuilder(PATHS.src, PATHS.templates.src, `**/*.{${TASKS.templates.extensions}}`))
     .on('error', errorHandler)
     .pipe(gulpif(engine === "twig", twig(twigOptions)))
     .pipe(gulpif(engine === "nunjucks", nunjucksRender(nunjucksOptions)))

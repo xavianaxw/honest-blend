@@ -9,7 +9,7 @@ import errorHandler from "../helpers/error-handler";
 
 export function scripts() {
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.javascripts.src, "**/*.{js,jsx}"))
+    .src(pathBuilder(PATHS.src, PATHS.javascripts.src, `**/*.{${TASKS.javascripts.extensions}}`))
     .on('error', errorHandler)
     .pipe(gulpWebpack(require('../webpack.config.js'), webpack))
     .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.javascripts.dest)))

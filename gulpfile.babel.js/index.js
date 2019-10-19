@@ -21,7 +21,6 @@ import pathBuilder from "./helpers/path-builder";
 // Fetch arguments from CLI
 var argv = require('minimist')(process.argv.slice(2));
 
-global.production = argv.production;
 global.isProduction = argv.production;
 
 // Commands

@@ -13,9 +13,9 @@ import errorHandler from "../helpers/error-handler";
 
 export function styles() {
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.stylesheets.src, "**/*.scss"))
+    .src(pathBuilder(PATHS.src, PATHS.stylesheets.src, `**/*.{${TASKS.stylesheets.extensions}}`))
     .on('error', errorHandler)
-    .pipe(gulpif(!global.production, sourcemaps.init()))
+    .pipe(gulpif(!isProduction, sourcemaps.init()))
     .pipe(sass(TASKS.stylesheets.sass))
     .on('error', errorHandler)
     .pipe(postcss(
@@ -25,7 +25,7 @@ export function styles() {
       ]
     ))
     .on('error', errorHandler)
-    .pipe(gulpif(!global.production, sourcemaps.write()))
+    .pipe(gulpif(!isProduction, sourcemaps.write()))
     .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.stylesheets.dest)))
     .pipe(browserSync.stream());
 }

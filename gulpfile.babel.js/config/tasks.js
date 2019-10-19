@@ -57,7 +57,8 @@ export default {
   },
 
   templates: {
-    engine: "nunjucks", // or nunjucks
+    extensions: ["njk"], // or twig
+    engine: "nunjucks", // or twig
 
     // https://www.npmjs.com/package/gulp-twig#options
     twig: {},
