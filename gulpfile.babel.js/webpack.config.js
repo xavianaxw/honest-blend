@@ -6,6 +6,8 @@ import pathBuilder from "./helpers/path-builder";
 import ensureLeadingDot from "./helpers/ensure-leading-dot";
 import pathToUrl from "./helpers/path-to-url";
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 const jsSrc = pathBuilder(PATHS.src, PATHS.javascripts.src);
 const jsDest = pathBuilder(PATHS.dest, PATHS.javascripts.dest);
 const publicPath = pathToUrl(TASKS.javascripts.publicPath || PATHS.javascripts.dest, '/')
@@ -52,21 +54,18 @@ const webpackConfig = {
 };
 
 if (isProduction) {
-  const uglifyConfig = TASKS.javascripts.production.uglifyJsPlugin
   webpackConfig.devtool = TASKS.javascripts.production.devtool;
-
-  // enable sourcemap if devtool is defined
-
-  if (webpackConfig.devtool) {
-    uglifyConfig.sourceMap = true
-  }
 
   webpackConfig.plugins.push(
     new webpack.DefinePlugin(TASKS.javascripts.production.definePlugin),
-    new webpack.optimize.UglifyJsPlugin(uglifyConfig),
     new webpack.NoEmitOnErrorsPlugin(),
     ...TASKS.javascripts.production.plugins,
   );
+
+  webpackConfig.optimization = {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  };
 } else {
   webpackConfig.devtool = TASKS.javascripts.development.devtool;
 
