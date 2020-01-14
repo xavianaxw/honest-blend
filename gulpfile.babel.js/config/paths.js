@@ -22,7 +22,11 @@ export default {
     dest: 'images',
   },
 
-  // icons
+  icons: {
+    src: 'icons',
+    dest: 'images',
+  },
+  
   // fonts
   // static
   // svg?

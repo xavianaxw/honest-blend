@@ -15,6 +15,7 @@ import { styles } from './tasks/stylesheets';
 import { templates } from './tasks/templates';
 import { scripts } from './tasks/scripts';
 import { images } from './tasks/images';
+import { icons } from './tasks/icons';
 
 // Helpers
 import pathBuilder from './helpers/path-builder';
@@ -29,7 +30,7 @@ global.isProduction = argv.production;
 // export default series(styles);
 export default series(
   cleanAll,
-  parallel(styles, templates, scripts, images),
+  parallel(styles, templates, scripts, images, icons),
   serve,
   function watcher() {
     watch(pathBuilder(PATHS.src, PATHS.stylesheets.src, `**/*.{${TASKS.stylesheets.extensions}}`), series(cleanStyles, styles));
@@ -41,5 +42,5 @@ export default series(
 
 export const build = series(
   cleanAll,
-  parallel(styles, templates, scripts, images),
+  parallel(styles, templates, scripts, images, icons),
 );

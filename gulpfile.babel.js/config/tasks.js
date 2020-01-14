@@ -79,7 +79,15 @@ export default {
     extensions: ['jpg', 'png', 'svg', 'gif']
   },
 
-  // icons
+  icons: {
+    svgmin: {
+      plugins: [
+        { removeViewBox: false },
+      ],
+    },
+    svgstore: {},
+  },
+
   // fonts
   // static
   // svg?
