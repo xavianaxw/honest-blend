@@ -6,17 +6,17 @@
 
 export default {
   stylesheets: {
-    extensions: ["css, scss"],
+    extensions: ['css', 'scss'],
     sass: {
-      includePaths: ["./node_modules"],
+      includePaths: ['./node_modules'],
     },
     stylelint: {
       failAfterError: true,
-      reports: [{ formatter: "verbose", console: true }],
-      syntax: "scss",
+      reports: [{ formatter: 'verbose', console: true }],
+      syntax: 'scss',
     },
     autoprefixer: {
-      grid: "no-autoplace",
+      grid: 'no-autoplace',
     },
     cssnano: {},
   },
@@ -25,11 +25,11 @@ export default {
     extensions: ['js', 'jsx'],
 
     entry: {
-      app: ["./app.js"],
+      app: ['./app.js'],
     },
 
     // needed only if path differs from path config
-    // publicPath: "",
+    // publicPath: ',
 
     provide: {},
 
@@ -49,16 +49,15 @@ export default {
     production: {
       devtool: false,
       definePlugin: {
-        "isProduction": true,
+        'isProduction': true,
       },
-      uglifyJsPlugin: {},
       plugins: [],
     },
   },
 
   templates: {
-    extensions: ["njk"], // or twig
-    engine: "nunjucks", // or twig
+    extensions: ['html', 'njk'], // or twig
+    language: 'nunjucks', // or twig
 
     // https://www.npmjs.com/package/gulp-twig#options
     twig: {},

@@ -10,15 +10,22 @@ import pathBuilder from "../helpers/path-builder";
 import errorHandler from "../helpers/error-handler";
 
 export function templates() {
-  const { engine, twig: twigOptions, nunjucks: nunjucksOptions } = TASKS.templates;
+  const { language, twig: twigOptions, nunjucks: nunjucksOptions } = TASKS.templates;
+
+  let templateParser
+
+  if (language === 'twig') {
+    templateParser = twig(twigOptions)
+  } else if (language === 'nunjucks') {
+    templateParser = nunjucksRender(nunjucksOptions)
+  }
 
   return gulp
     .src(pathBuilder(PATHS.src, PATHS.templates.src, `**/*.{${TASKS.templates.extensions}}`))
     .on('error', errorHandler)
-    .pipe(gulpif(engine === "twig", twig(twigOptions)))
-    .pipe(gulpif(engine === "nunjucks", nunjucksRender(nunjucksOptions)))
+    .pipe(templateParser)
     .on('error', errorHandler)
-    .pipe(gulpif(global.production, htmlmin(TASKS.templates.htmlmin)))
+    .pipe(gulpif(!isProduction, htmlmin(TASKS.templates.htmlmin)))
     .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.templates.dest)))
     .pipe(browserSync.stream());
 }
