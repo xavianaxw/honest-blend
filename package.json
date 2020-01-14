@@ -6,10 +6,10 @@
   "author": "Xavian Ang <xavianaxw@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4",
-    "autoprefixer": "^9.6.5",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "autoprefixer": "^9.7.3",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "cssnano": "^4.1.10",
@@ -25,15 +25,16 @@
     "gulp-twig": "^1.2.0",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "webpack": "^4.41.2",
+    "terser-webpack-plugin": "^2.3.2",
+    "webpack": "^4.41.5",
     "webpack-stream": "^5.2.1"
   },
   "scripts": {
     "start": "gulp",
-    "build": "gulp --production"
+    "build": "gulp build --production"
   },
   "dependencies": {
-    "core-js": "^3.2.1",
+    "core-js": "^3.6.4",
     "regenerator-runtime": "^0.13.3"
   }
 }
