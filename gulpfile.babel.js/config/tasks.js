@@ -91,7 +91,9 @@ export default {
   fonts: {
     extensions: ["woff2", "woff", "eot", "ttf", "svg"]
   },
-  
-  // static
-  // svg?
+
+  static: {
+    excludes: ["README.md", ".DS_Store"],
+  },
 };
+

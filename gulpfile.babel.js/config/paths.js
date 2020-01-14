@@ -32,6 +32,8 @@ export default {
     dest: 'fonts',
   },
 
-  // static
-  // svg?
+  static: {
+    src: 'static',
+    dest: '.',
+  },
 };
