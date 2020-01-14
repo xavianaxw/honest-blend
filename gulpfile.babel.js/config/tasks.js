@@ -75,7 +75,10 @@ export default {
     },
   },
 
-  // images
+  images: {
+    extensions: ['jpg', 'png', 'svg', 'gif']
+  },
+
   // icons
   // fonts
   // static
