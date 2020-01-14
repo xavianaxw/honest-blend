@@ -6,12 +6,12 @@ import browserSync from 'browser-sync';
 import pathBuilder from '../helpers/path-builder';
 import errorHandler from "../helpers/error-handler";
 
-export function images() {
+export function fonts() {
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.images.src, `**/*.{${TASKS.images.extensions}}`))
+    .src(pathBuilder(PATHS.src, PATHS.fonts.src, `**/*.{${TASKS.fonts.extensions}}`))
     .on('error', errorHandler)
-    .pipe(changed(pathBuilder(PATHS.dest, PATHS.images.dest)))
+    .pipe(changed(pathBuilder(PATHS.dest, PATHS.fonts.dest)))
     .on('error', errorHandler)
-    .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.images.dest)))
+    .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.fonts.dest)))
     .pipe(browserSync.stream());
 }

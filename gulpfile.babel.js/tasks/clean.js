@@ -14,3 +14,18 @@ export function cleanStyles() {
 export function cleanTemplates() {
   return del([ pathBuilder(PATHS.dest, PATHS.templates.dest, "**/*.html") ]);
 }
+
+export function cleanImages() {
+  return del([
+    pathBuilder(PATHS.dest, PATHS.images.dest, `**/*.{${TASKS.images.extensions}}`), 
+    `!${pathBuilder(PATHS.dest, PATHS.images.dest, 'icons.svg')}`
+  ]);
+}
+
+export function cleanIcons() {
+  return del([ pathBuilder(PATHS.dest, PATHS.images.dest, 'icons.svg') ]);
+}
+
+export function cleanFonts() {
+  return del([ pathBuilder(PATHS.dest, PATHS.fonts.dest) ]);
+}

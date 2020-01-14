@@ -88,7 +88,10 @@ export default {
     svgstore: {},
   },
 
-  // fonts
+  fonts: {
+    extensions: ["woff2", "woff", "eot", "ttf", "svg"]
+  },
+  
   // static
   // svg?
 };

@@ -26,8 +26,12 @@ export default {
     src: 'icons',
     dest: 'images',
   },
-  
-  // fonts
+
+  fonts: {
+    src: 'fonts',
+    dest: 'fonts',
+  },
+
   // static
   // svg?
 };
