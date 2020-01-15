@@ -4,10 +4,9 @@ import browserSync from 'browser-sync';
 
 // Helpers
 import pathBuilder from '../helpers/path-builder';
-import errorHandler from "../helpers/error-handler";
+import errorHandler from '../helpers/error-handler';
 
 export function staticFiles() {
-  console.log(`!${pathBuilder(PATHS.src, PATHS.static.src, `{${TASKS.static.excludes}}`)}`);
   return gulp
     .src([
       pathBuilder(PATHS.src, PATHS.static.src, '**/*'),

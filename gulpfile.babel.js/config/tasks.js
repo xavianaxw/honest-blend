@@ -95,5 +95,9 @@ export default {
   static: {
     excludes: ["README.md", ".DS_Store"],
   },
+
+  production: {
+    rev: true,
+  },
 };
 

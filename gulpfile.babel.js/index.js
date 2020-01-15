@@ -18,9 +18,12 @@ import { images } from './tasks/images';
 import { icons } from './tasks/icons';
 import { fonts } from './tasks/fonts';
 import { staticFiles } from './tasks/static';
+// import { revAssets, revUpdateReferences, revCss, revUpdateHtml } from './tasks/rev';
+import revTasks from './tasks/rev';
 
 // Helpers
 import pathBuilder from './helpers/path-builder';
+
 
 // Fetch arguments from CLI
 var argv = require('minimist')(process.argv.slice(2));
@@ -29,7 +32,6 @@ global.isProduction = argv.production;
 
 // Commands
 // gulp
-// export default series(styles);
 export default series(
   cleanAll,
   parallel(styles, templates, scripts, images, icons, fonts, staticFiles),
@@ -45,7 +47,9 @@ export default series(
   }
 )
 
+// gulp build
 export const build = series(
   cleanAll,
   parallel(styles, templates, scripts, images, icons, fonts, staticFiles),
+  TASKS.production.rev ? revTasks : function revDisabled(cb) { cb(); },
 );
