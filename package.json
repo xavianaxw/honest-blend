@@ -6,10 +6,10 @@
   "author": "Xavian Ang <xavianaxw@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "@babel/register": "^7.8.3",
-    "autoprefixer": "^9.7.3",
+    "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "browser-sync": "^2.26.7",
     "cssnano": "^4.1.10",
@@ -23,7 +23,7 @@
     "gulp-postcss": "^8.0.0",
     "gulp-rev": "^9.0.0",
     "gulp-rev-delete-original": "^0.2.3",
-    "gulp-rev-rewrite": "^3.0.0",
+    "gulp-rev-rewrite": "^3.0.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-svgmin": "^2.2.0",
@@ -31,8 +31,8 @@
     "gulp-twig": "^1.2.0",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "terser-webpack-plugin": "^2.3.2",
-    "webpack": "^4.41.5",
+    "terser-webpack-plugin": "^2.3.5",
+    "webpack": "^4.41.6",
     "webpack-stream": "^5.2.1"
   },
   "scripts": {
