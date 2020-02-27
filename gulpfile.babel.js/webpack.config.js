@@ -3,14 +3,26 @@ import TerserPlugin from 'terser-webpack-plugin';
 
 // Helpers
 import path from "path";
+import configBuilder from './helpers/config-builder';
 import pathBuilder from "./helpers/path-builder";
 import ensureLeadingDot from "./helpers/ensure-leading-dot";
 import pathToUrl from "./helpers/path-to-url";
 
+// Get our configurations
+const config = configBuilder();
+
+const PATHSCONFIG = config.paths;
+const TASKSCONFIG = config.tasks;
+const isProduction = config.isProduction;
+
 const jsSrc = pathBuilder(PATHSCONFIG.src, PATHSCONFIG.javascripts.src);
 const jsDest = pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.javascripts.dest);
-const publicPath = pathToUrl(TASKSCONFIG.javascripts.publicPath || PATHSCONFIG.javascripts.dest, '/')
+const publicPath2 = pathToUrl(TASKSCONFIG.javascripts.publicPath || PATHSCONFIG.javascripts.dest, '/')
+const publicPath = '/build/';
 const extensions = TASKSCONFIG.javascripts.extensions.map(ensureLeadingDot);
+
+console.log(publicPath2);
+console.log(publicPath);
 
 // build our babelLoader
 const babelLoader = {
@@ -23,13 +35,13 @@ const babelLoader = {
 };
 
 // https://webpack.js.org/configuration/
-const webpackConfig = {
+const generatedWebpackConfig = {
   context: jsSrc,
   mode: isProduction ? 'production' : 'development',
   entry: TASKSCONFIG.javascripts.entry,
 
   output: {
-    path: path.normalize(jsDest),
+    path: jsDest,
     filename: '[name].js',
     publicPath,
     pathinfo: true,
@@ -57,25 +69,25 @@ const webpackConfig = {
 };
 
 if (isProduction) {
-  webpackConfig.devtool = TASKSCONFIG.javascripts.production.devtool;
+  generatedWebpackConfig.devtool = TASKSCONFIG.javascripts.production.devtool;
 
-  webpackConfig.plugins.push(
+  generatedWebpackConfig.plugins.push(
     new webpack.DefinePlugin(TASKSCONFIG.javascripts.production.definePlugin),
     new webpack.NoEmitOnErrorsPlugin(),
     ...TASKSCONFIG.javascripts.production.plugins,
   );
 
-  webpackConfig.optimization = {
+  generatedWebpackConfig.optimization = {
     minimize: true,
     minimizer: [new TerserPlugin()],
   };
 } else {
-  webpackConfig.devtool = TASKSCONFIG.javascripts.development.devtool;
+  generatedWebpackConfig.devtool = TASKSCONFIG.javascripts.development.devtool;
 
-  webpackConfig.plugins.push(
+  generatedWebpackConfig.plugins.push(
     new webpack.DefinePlugin(TASKSCONFIG.javascripts.development.definePlugin),
     ...TASKSCONFIG.javascripts.development.plugins,
   );
 }
 
-module.exports = webpackConfig;
+module.exports = generatedWebpackConfig;

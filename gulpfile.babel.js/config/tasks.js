@@ -93,46 +93,46 @@ export default {
     },
   },
 
-  // templates: {
-  //   extensions: ['html', 'njk'], // or twig
-  //   language: 'nunjucks', // or twig
+  templates: {
+    extensions: ['html', 'njk'], // or twig
+    language: 'nunjucks', // or twig
 
-  //   // https://www.npmjs.com/package/gulp-twig#options
-  //   twig: {},
+    // https://www.npmjs.com/package/gulp-twig#options
+    twig: {},
 
-  //   // https://www.npmjs.com/package/gulp-nunjucks-render#options
-  //   nunjucks: {
-  //     envOptions: {
-  //       watch: false
-  //     }
-  //   },
+    // https://www.npmjs.com/package/gulp-nunjucks-render#options
+    nunjucks: {
+      envOptions: {
+        watch: false
+      }
+    },
 
-  //   // https://github.com/kangax/html-minifier#options-quick-reference
-  //   htmlmin: {
-  //     collapseWhitespace: true,
-  //   },
-  // },
+    // https://github.com/kangax/html-minifier#options-quick-reference
+    htmlmin: {
+      collapseWhitespace: true,
+    },
+  },
 
-  // images: {
-  //   extensions: ['jpg', 'png', 'svg', 'gif']
-  // },
+  images: {
+    extensions: ['jpg', 'png', 'svg', 'gif']
+  },
 
-  // icons: {
-  //   svgmin: {
-  //     plugins: [
-  //       { removeViewBox: false },
-  //     ],
-  //   },
-  //   svgstore: {},
-  // },
+  icons: {
+    svgmin: {
+      plugins: [
+        { removeViewBox: false },
+      ],
+    },
+    svgstore: {},
+  },
 
-  // fonts: {
-  //   extensions: ["woff2", "woff", "eot", "ttf", "svg"]
-  // },
+  fonts: {
+    extensions: ["woff2", "woff", "eot", "ttf", "svg"]
+  },
 
-  // static: {
-  //   excludes: ["README.md", ".DS_Store"],
-  // },
+  static: {
+    excludes: ["README.md", ".DS_Store"],
+  },
 
   production: {
     rev: true,
