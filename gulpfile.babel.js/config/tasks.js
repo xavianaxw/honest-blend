@@ -34,39 +34,64 @@ export default {
     }
   },
 
-  // javascripts: {
-  //   extensions: ['js', 'jsx'],
+  javascripts: {
+    extensions: ['js', 'jsx'],
 
-  //   entry: {
-  //     app: ['./app.js'],
-  //   },
+    entry: {
+      app: ['./app.js'],
+    },
 
-  //   // needed only if path differs from path config
-  //   // publicPath: ',
+    // needed only if path differs from path config
+    // publicPath: '',
 
-  //   provide: {},
+    provide: {},
 
-  //   alias: {},
+    alias: {},
 
-  //   loaders: [],
+    babelLoader: {
+      // also accepts the following configuration options
+      // test
+      // exclude
 
-  //   plugins: [],
+      // https://github.com/babel/babel-loader#options
+      // options
+    },
 
-  //   development: {
-  //     devtool: 'eval-cheap-module-source-map',
-  //     definePlugin: {},
-  //     plugins: [],
-  //   },
+    loaders: [],
 
-  //   // production only settings
-  //   production: {
-  //     devtool: false,
-  //     definePlugin: {
-  //       'isProduction': true,
-  //     },
-  //     plugins: [],
-  //   },
-  // },
+    // add additional plugins to both development and production env
+    plugins: [],
+
+    // ===============================================================================
+    // environment specific configurations
+    // ===============================================================================
+
+    development: {
+      // https://webpack.js.org/configuration/devtool
+      devtool: 'eval-cheap-module-source-map',
+
+      // https://webpack.js.org/plugins/define-plugin/
+      definePlugin: {},
+
+      // add additional plugins
+      // https://webpack.js.org/plugins/
+      plugins: [],
+    },
+
+    production: {
+      // https://webpack.js.org/configuration/devtool
+      devtool: false,
+
+      // https://webpack.js.org/plugins/define-plugin/
+      definePlugin: {
+        'isProduction': true,
+      },
+
+      // add additional plugins
+      // https://webpack.js.org/plugins/
+      plugins: [],
+    },
+  },
 
   // templates: {
   //   extensions: ['html', 'njk'], // or twig

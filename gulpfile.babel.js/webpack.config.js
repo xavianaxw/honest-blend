@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import TerserPlugin from 'terser-webpack-plugin';
 
 // Helpers
 import path from "path";
@@ -6,12 +7,22 @@ import pathBuilder from "./helpers/path-builder";
 import ensureLeadingDot from "./helpers/ensure-leading-dot";
 import pathToUrl from "./helpers/path-to-url";
 
-const TerserPlugin = require('terser-webpack-plugin');
-
 const jsSrc = pathBuilder(PATHSCONFIG.src, PATHSCONFIG.javascripts.src);
 const jsDest = pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.javascripts.dest);
 const publicPath = pathToUrl(TASKSCONFIG.javascripts.publicPath || PATHSCONFIG.javascripts.dest, '/')
+const extensions = TASKSCONFIG.javascripts.extensions.map(ensureLeadingDot);
 
+// build our babelLoader
+const babelLoader = {
+  test: TASKSCONFIG.javascripts.babelLoader.test || new RegExp(`(\\${extensions.join('$|')}$)`),
+  exclude: /node_modules/,
+  use: {
+    loader: 'babel-loader',
+    options: TASKSCONFIG.javascripts.babelLoader.options || { presets: ['@babel/preset-env'] },
+  }
+};
+
+// https://webpack.js.org/configuration/
 const webpackConfig = {
   context: jsSrc,
   mode: isProduction ? 'production' : 'development',
@@ -21,20 +32,12 @@ const webpackConfig = {
     path: path.normalize(jsDest),
     filename: '[name].js',
     publicPath,
+    pathinfo: true,
   },
 
   module: {
     rules: [
-      {
-        test: /^(?!.*\.{test,min}\.js$).*\.js$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      },
+      babelLoader,
       ...TASKSCONFIG.javascripts.loaders,
     ]
   },
@@ -46,7 +49,7 @@ const webpackConfig = {
   ],
 
   resolve: {
-    extensions: TASKSCONFIG.javascripts.extensions.map(ensureLeadingDot),
+    extensions,
     alias: TASKSCONFIG.javascripts.alias,
     modules: [jsSrc, pathBuilder('node_modules')],
   }
