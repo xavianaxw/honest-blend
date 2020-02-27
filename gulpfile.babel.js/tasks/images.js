@@ -8,10 +8,10 @@ import errorHandler from "../helpers/error-handler";
 
 export function images() {
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.images.src, `**/*.{${TASKS.images.extensions}}`))
+    .src(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.images.src, `**/*.{${TASKSCONFIG.images.extensions}}`))
     .on('error', errorHandler)
-    .pipe(changed(pathBuilder(PATHS.dest, PATHS.images.dest)))
+    .pipe(changed(pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.images.dest)))
     .on('error', errorHandler)
-    .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.images.dest)))
+    .pipe(gulp.dest(pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.images.dest)))
     .pipe(browserSync.stream());
 }

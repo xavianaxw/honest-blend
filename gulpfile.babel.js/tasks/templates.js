@@ -10,7 +10,7 @@ import pathBuilder from "../helpers/path-builder";
 import errorHandler from "../helpers/error-handler";
 
 export function templates() {
-  const { language, twig: twigOptions, nunjucks: nunjucksOptions } = TASKS.templates;
+  const { language, twig: twigOptions, nunjucks: nunjucksOptions } = TASKSCONFIG.templates;
 
   let templateParser
 
@@ -21,11 +21,11 @@ export function templates() {
   }
 
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.templates.src, `**/*.{${TASKS.templates.extensions}}`))
+    .src(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.templates.src, `**/*.{${TASKSCONFIG.templates.extensions}}`))
     .on('error', errorHandler)
     .pipe(templateParser)
     .on('error', errorHandler)
-    .pipe(gulpif(!isProduction, htmlmin(TASKS.templates.htmlmin)))
-    .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.templates.dest)))
+    .pipe(gulpif(!isProduction, htmlmin(TASKSCONFIG.templates.htmlmin)))
+    .pipe(gulp.dest(pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.templates.dest)))
     .pipe(browserSync.stream());
 }

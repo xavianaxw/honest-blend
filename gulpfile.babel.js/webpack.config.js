@@ -8,14 +8,14 @@ import pathToUrl from "./helpers/path-to-url";
 
 const TerserPlugin = require('terser-webpack-plugin');
 
-const jsSrc = pathBuilder(PATHS.src, PATHS.javascripts.src);
-const jsDest = pathBuilder(PATHS.dest, PATHS.javascripts.dest);
-const publicPath = pathToUrl(TASKS.javascripts.publicPath || PATHS.javascripts.dest, '/')
+const jsSrc = pathBuilder(PATHSCONFIG.src, PATHSCONFIG.javascripts.src);
+const jsDest = pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.javascripts.dest);
+const publicPath = pathToUrl(TASKSCONFIG.javascripts.publicPath || PATHSCONFIG.javascripts.dest, '/')
 
 const webpackConfig = {
   context: jsSrc,
   mode: isProduction ? 'production' : 'development',
-  entry: TASKS.javascripts.entry,
+  entry: TASKSCONFIG.javascripts.entry,
 
   output: {
     path: path.normalize(jsDest),
@@ -35,31 +35,31 @@ const webpackConfig = {
           }
         }
       },
-      ...TASKS.javascripts.loaders,
+      ...TASKSCONFIG.javascripts.loaders,
     ]
   },
 
   plugins: [
     // Provide global objects to imported modules to resolve dependencies (e.g. jquery)
-    new webpack.ProvidePlugin(TASKS.javascripts.provide),
-    ...TASKS.javascripts.plugins,
+    new webpack.ProvidePlugin(TASKSCONFIG.javascripts.provide),
+    ...TASKSCONFIG.javascripts.plugins,
   ],
 
   resolve: {
-    extensions: TASKS.javascripts.extensions.map(ensureLeadingDot),
-    alias: TASKS.javascripts.alias,
+    extensions: TASKSCONFIG.javascripts.extensions.map(ensureLeadingDot),
+    alias: TASKSCONFIG.javascripts.alias,
     modules: [jsSrc, pathBuilder('node_modules')],
   }
 
 };
 
 if (isProduction) {
-  webpackConfig.devtool = TASKS.javascripts.production.devtool;
+  webpackConfig.devtool = TASKSCONFIG.javascripts.production.devtool;
 
   webpackConfig.plugins.push(
-    new webpack.DefinePlugin(TASKS.javascripts.production.definePlugin),
+    new webpack.DefinePlugin(TASKSCONFIG.javascripts.production.definePlugin),
     new webpack.NoEmitOnErrorsPlugin(),
-    ...TASKS.javascripts.production.plugins,
+    ...TASKSCONFIG.javascripts.production.plugins,
   );
 
   webpackConfig.optimization = {
@@ -67,11 +67,11 @@ if (isProduction) {
     minimizer: [new TerserPlugin()],
   };
 } else {
-  webpackConfig.devtool = TASKS.javascripts.development.devtool;
+  webpackConfig.devtool = TASKSCONFIG.javascripts.development.devtool;
 
   webpackConfig.plugins.push(
-    new webpack.DefinePlugin(TASKS.javascripts.development.definePlugin),
-    ...TASKS.javascripts.development.plugins,
+    new webpack.DefinePlugin(TASKSCONFIG.javascripts.development.definePlugin),
+    ...TASKSCONFIG.javascripts.development.plugins,
   );
 }
 

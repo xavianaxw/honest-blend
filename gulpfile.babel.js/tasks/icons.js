@@ -9,12 +9,12 @@ import errorHandler from "../helpers/error-handler";
 
 export function icons() {
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.icons.src, `**/*.svg`))
+    .src(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.icons.src, `**/*.svg`))
     .on('error', errorHandler)
-    .pipe(svgmin(TASKS.icons.svgmin))
+    .pipe(svgmin(TASKSCONFIG.icons.svgmin))
     .on('error', errorHandler)
-    .pipe(svgstore(TASKS.icons.svgstore))
+    .pipe(svgstore(TASKSCONFIG.icons.svgstore))
     .on('error', errorHandler)
-    .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.icons.dest)))
+    .pipe(gulp.dest(pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.icons.dest)))
     .pipe(browserSync.stream());
 }

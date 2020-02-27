@@ -5,8 +5,8 @@ import pathsConfig from './config/paths';
 import tasksConfig from './config/tasks';
 
 // Globally expose config objects
-global.PATHS = pathsConfig;
-global.TASKS = tasksConfig;
+global.PATHSCONFIG = pathsConfig;
+global.TASKSCONFIG = tasksConfig;
 
 // Tasks
 import { serve, reload } from './tasks/browser-sync';
@@ -31,42 +31,47 @@ global.isProduction = argv.production;
 // Fetch tasks with configuration only
 const tasks = [];
 
-if (tasksConfig.stylesheets) tasks.push(styles);
-if (tasksConfig.javascripts) tasks.push(scripts);
-if (tasksConfig.templates) tasks.push(templates);
-if (tasksConfig.images) tasks.push(images);
-if (tasksConfig.icons) tasks.push(icons);
-if (tasksConfig.fonts) tasks.push(fonts);
-if (tasksConfig.static) tasks.push(staticFiles);
-
-console.log(tasks);
+if (TASKSCONFIG.stylesheets) tasks.push(styles);
+if (TASKSCONFIG.javascripts) tasks.push(scripts);
+if (TASKSCONFIG.templates) tasks.push(templates);
+if (TASKSCONFIG.images) tasks.push(images);
+if (TASKSCONFIG.icons) tasks.push(icons);
+if (TASKSCONFIG.fonts) tasks.push(fonts);
+if (TASKSCONFIG.static) tasks.push(staticFiles);
 
 // Commands
 // gulp
 export default series(
   cleanAll,
-  // parallel(styles, templates, scripts, images, icons, fonts, staticFiles),
-  parallel(...tasks),
+  parallel(tasks),
   serve,
   function watcher() {
-    if (tasksConfig.stylesheets)
-      watch(
-        pathBuilder(PATHS.src, PATHS.stylesheets.src, `**/*.{${TASKS.stylesheets.extensions}}`), 
-        series(cleanStyles, styles)
-      );
+    if (TASKSCONFIG.stylesheets)
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.stylesheets.src, `**/*.{${TASKSCONFIG.stylesheets.extensions}}`), series(cleanStyles, styles));
+
+    if (TASKSCONFIG.javascripts) 
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.javascripts.src, `**/*.{${TASKSCONFIG.javascripts.extensions}}`), series(scripts, reload));
+
+    if (TASKSCONFIG.templates)
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.templates.src, `**/*.{${TASKSCONFIG.templates.extensions}}`), series(cleanTemplates, templates, reload));
       
-    // watch(pathBuilder(PATHS.src, PATHS.templates.src, `**/*.{${TASKS.templates.extensions}}`), series(cleanTemplates, templates, reload));
-    // watch(pathBuilder(PATHS.src, PATHS.javascripts.src, `**/*.{${TASKS.javascripts.extensions}}`), series(scripts, reload));
-    // watch(pathBuilder(PATHS.src, PATHS.images.src, `**/*.{${TASKS.images.extensions}}`), series(cleanImages, images, reload));
-    // watch(pathBuilder(PATHS.src, PATHS.icons.src, `**/*.svg`), series(cleanIcons, icons, reload));
-    // watch(pathBuilder(PATHS.src, PATHS.fonts.src, `**/*.{${TASKS.fonts.extensions}}`), series(cleanFonts, fonts, reload));
-    // watch(pathBuilder(PATHS.src, PATHS.static.src, `**/*`), series(staticFiles, reload));
+    if (TASKSCONFIG.images)
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.images.src, `**/*.{${TASKSCONFIG.images.extensions}}`), series(cleanImages, images, reload));
+
+    if (TASKSCONFIG.icons)
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.icons.src, `**/*.svg`), series(cleanIcons, icons, reload));
+
+    if (TASKSCONFIG.fonts)
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.fonts.src, `**/*.{${TASKSCONFIG.fonts.extensions}}`), series(cleanFonts, fonts, reload));
+
+    if (TASKSCONFIG.staticFiles)
+      watch(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.static.src, `**/*`), series(staticFiles, reload));
   }
 )
 
 // gulp build
 export const build = series(
   cleanAll,
-  parallel(styles, templates, scripts, images, icons, fonts, staticFiles),
-  TASKS.production.rev ? revTasks : function revDisabled(cb) { cb(); },
+  parallel(tasks),
+  TASKSCONFIG.production.rev ? revTasks : function revDisabled(cb) { cb(); },
 );

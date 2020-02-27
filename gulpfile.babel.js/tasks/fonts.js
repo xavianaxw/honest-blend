@@ -8,10 +8,10 @@ import errorHandler from "../helpers/error-handler";
 
 export function fonts() {
   return gulp
-    .src(pathBuilder(PATHS.src, PATHS.fonts.src, `**/*.{${TASKS.fonts.extensions}}`))
+    .src(pathBuilder(PATHSCONFIG.src, PATHSCONFIG.fonts.src, `**/*.{${TASKSCONFIG.fonts.extensions}}`))
     .on('error', errorHandler)
-    .pipe(changed(pathBuilder(PATHS.dest, PATHS.fonts.dest)))
+    .pipe(changed(pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.fonts.dest)))
     .on('error', errorHandler)
-    .pipe(gulp.dest(pathBuilder(PATHS.dest, PATHS.fonts.dest)))
+    .pipe(gulp.dest(pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.fonts.dest)))
     .pipe(browserSync.stream());
 }
