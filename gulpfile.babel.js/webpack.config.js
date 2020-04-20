@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 
 // Helpers
+import queryString from 'query-string';
 import configBuilder from './helpers/config-builder';
 import pathBuilder from "./helpers/path-builder";
 import ensureLeadingDot from "./helpers/ensure-leading-dot";
@@ -64,21 +65,45 @@ const generatedWebpackConfig = {
 };
 
 if (isProduction) {
+  // production environment
+  // devtool
   generatedWebpackConfig.devtool = TASKSCONFIG.javascripts.production.devtool;
 
+  // plugins
   generatedWebpackConfig.plugins.push(
     new webpack.DefinePlugin(TASKSCONFIG.javascripts.production.definePlugin),
     new webpack.NoEmitOnErrorsPlugin(),
     ...TASKSCONFIG.javascripts.production.plugins,
   );
 
+  // optimization for minimizer
   generatedWebpackConfig.optimization = {
     minimize: true,
     minimizer: [new TerserPlugin()],
   };
 } else {
+  // development environment
+  // hot module reloading
+  if (TASKSCONFIG.javascripts.hot) {
+    for (let key in TASKSCONFIG.javascripts.entry) {
+      const newEntriesToAdd = [];
+
+      // if react hot enabled
+      // newEntriesToAdd.push('react-hot-loader/patch');
+
+      newEntriesToAdd.push(`webpack-hot-middleware/client?${queryString.stringify(TASKSCONFIG.javascripts.hot)}`);
+
+      TASKSCONFIG.javascripts.entry[key] = [...TASKSCONFIG.javascripts.entry[key], ...newEntriesToAdd];
+    };
+
+    // add webpack.HotModuleReplacementPlugin()
+    generatedWebpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+
+  // devtool
   generatedWebpackConfig.devtool = TASKSCONFIG.javascripts.development.devtool;
 
+  // plugins
   generatedWebpackConfig.plugins.push(
     new webpack.DefinePlugin(TASKSCONFIG.javascripts.development.definePlugin),
     ...TASKSCONFIG.javascripts.development.plugins,

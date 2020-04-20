@@ -57,6 +57,13 @@ export default {
       // options
     },
 
+    hot: {
+      reload: true,
+      noInfo: false,
+      quiet: true,
+      react: false
+    },
+
     loaders: [],
 
     // add additional plugins to both development and production env
