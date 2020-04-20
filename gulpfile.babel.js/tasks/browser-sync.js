@@ -2,23 +2,20 @@ import { series, watch } from 'gulp';
 import browserSync from "browser-sync";
 import webpack from 'webpack';
 import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackConfig from '../webpack.config';
 
 // Helpers
 import pathBuilder from "../helpers/path-builder";
 import pathToUrl from "../helpers/path-to-url";
 
-// import { webpackConfig } from '../webpack.config';
-// import webpackConfig from '../webpack.config';
-
 const browser = browserSync.create();
 
 export function serve(cb) {
   const middleware = [];
+  const compiler = webpack(webpackConfig);
 
   if (TASKSCONFIG.javascripts) {
-    const webpackConfig = require('../webpack.config.js');
-    // console.log(`browser-sync: ${pathToUrl('/', webpackConfig.output.publicPath)}`);
-    middleware.push(webpackDevMiddleware(webpack(webpackConfig), {
+    middleware.push(webpackDevMiddleware(compiler, {
       publicPath: pathToUrl('/', webpackConfig.output.publicPath),
     }));
   }

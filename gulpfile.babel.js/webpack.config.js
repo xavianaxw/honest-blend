@@ -2,7 +2,6 @@ import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 
 // Helpers
-import path from "path";
 import configBuilder from './helpers/config-builder';
 import pathBuilder from "./helpers/path-builder";
 import ensureLeadingDot from "./helpers/ensure-leading-dot";
