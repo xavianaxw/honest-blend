@@ -17,12 +17,8 @@ const isProduction = config.isProduction;
 
 const jsSrc = pathBuilder(PATHSCONFIG.src, PATHSCONFIG.javascripts.src);
 const jsDest = pathBuilder(PATHSCONFIG.dest, PATHSCONFIG.javascripts.dest);
-const publicPath2 = pathToUrl(TASKSCONFIG.javascripts.publicPath || PATHSCONFIG.javascripts.dest, '/')
-const publicPath = '/build/';
+const publicPath = pathToUrl(TASKSCONFIG.javascripts.publicPath || PATHSCONFIG.javascripts.dest, '/')
 const extensions = TASKSCONFIG.javascripts.extensions.map(ensureLeadingDot);
-
-console.log(publicPath2);
-console.log(publicPath);
 
 // build our babelLoader
 const babelLoader = {

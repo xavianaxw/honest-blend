@@ -17,6 +17,7 @@ export function serve(cb) {
 
   if (TASKSCONFIG.javascripts) {
     const webpackConfig = require('../webpack.config.js');
+    // console.log(`browser-sync: ${pathToUrl('/', webpackConfig.output.publicPath)}`);
     middleware.push(webpackDevMiddleware(webpack(webpackConfig), {
       publicPath: pathToUrl('/', webpackConfig.output.publicPath),
     }));
@@ -32,7 +33,7 @@ export function serve(cb) {
 
   // watch(pathBuilder(PATHSCONFIG.dest, '*.js'), browser.reload());
   // watch('*.js', browser.reload());
-  watch('/build/*.js', browser.reload());
+  // watch('/build/*.js', browser.reload());
 
   cb();
 }
