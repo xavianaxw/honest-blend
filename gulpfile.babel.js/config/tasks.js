@@ -101,7 +101,7 @@ export default {
   },
 
   templates: {
-    extensions: ['html', 'njk'], // or twig
+    extensions: ['html', 'njk', 'svg'], // or twig
     language: 'nunjucks', // or twig
 
     // https://www.npmjs.com/package/gulp-twig#options
