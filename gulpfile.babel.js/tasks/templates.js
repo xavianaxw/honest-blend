@@ -17,6 +17,7 @@ export function templates() {
   if (language === 'twig') {
     templateParser = twig(twigOptions)
   } else if (language === 'nunjucks') {
+    nunjucksOptions.path = [pathBuilder(PATHSCONFIG.src, PATHSCONFIG.templates.src)];
     templateParser = nunjucksRender(nunjucksOptions)
   }
 
