@@ -7,15 +7,18 @@ import revRewrite from 'gulp-rev-rewrite';
 import pathBuilder from '../helpers/path-builder';
 
 export function revAssets() {
-  return gulp.src([
-      pathBuilder(PATHSCONFIG.dest,'**/*'),
-      '!' + pathBuilder(PATHSCONFIG.dest, '**/*+(css|js|map|json|html)')
-    ])
-    .pipe(rev())
-    .pipe(gulp.dest(PATHSCONFIG.dest))
-    .pipe(revdel())
-    .pipe(rev.manifest(pathBuilder(PATHSCONFIG.dest, 'rev-manifest.json'), { merge: true }))
-    .pipe(gulp.dest('.'));
+  return gulp.src(
+    [
+      pathBuilder(PATHSCONFIG.dest, '**/*.css'),
+      pathBuilder(PATHSCONFIG.dest, '**/*.js'),
+      pathBuilder(PATHSCONFIG.dest, '**/*.{jpg,png,jpeg,gif,svg}'),
+    ]
+  )
+  .pipe(rev())
+  .pipe(revdel())
+  .pipe(gulp.dest(PATHSCONFIG.dest))
+  .pipe(rev.manifest(pathBuilder(PATHSCONFIG.dest, 'rev-manifest.json'), { merge: true }))
+  .pipe(gulp.dest('.'));
 }
 
 export function revUpdateReferences() {
@@ -24,15 +27,6 @@ export function revUpdateReferences() {
       manifest: gulp.src(pathBuilder(PATHSCONFIG.dest, "rev-manifest.json"))
     }))
     .pipe(gulp.dest(PATHSCONFIG.dest));
-}
-
-export function revCss() {
-  return gulp.src(pathBuilder(PATHSCONFIG.dest, '**/*.{css,js}'))
-    .pipe(rev())
-    .pipe(gulp.dest(PATHSCONFIG.dest))
-    .pipe(revdel())
-    .pipe(rev.manifest(pathBuilder(PATHSCONFIG.dest, 'rev-manifest.json'), { merge: true }))
-    .pipe(gulp.dest('.'));
 }
 
 export function revUpdateHtml() {
@@ -44,5 +38,7 @@ export function revUpdateHtml() {
 }
 
 export default series(
-  revAssets, revUpdateReferences, revCss, revUpdateHtml
+  revAssets,
+  revUpdateReferences,
+  revUpdateHtml
 );
