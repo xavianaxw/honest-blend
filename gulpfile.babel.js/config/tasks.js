@@ -83,6 +83,10 @@ export default {
       // add additional plugins
       // https://webpack.js.org/plugins/
       plugins: [],
+
+      // add additional optimizations
+      // https://webpack.js.org/configuration/optimization/
+      optimization: {},
     },
 
     production: {
@@ -97,6 +101,10 @@ export default {
       // add additional plugins
       // https://webpack.js.org/plugins/
       plugins: [],
+
+      // add additional optimizations
+      // https://webpack.js.org/configuration/optimization/
+      optimization: {},
     },
   },
 

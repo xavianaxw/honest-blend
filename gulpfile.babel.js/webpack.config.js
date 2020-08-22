@@ -80,6 +80,7 @@ if (isProduction) {
   generatedWebpackConfig.optimization = {
     minimize: true,
     minimizer: [new TerserPlugin()],
+    ...TASKSCONFIG.javascripts.production.optimization,
   };
 } else {
   // development environment
@@ -96,8 +97,16 @@ if (isProduction) {
       TASKSCONFIG.javascripts.entry[key] = [...TASKSCONFIG.javascripts.entry[key], ...newEntriesToAdd];
     };
 
-    // add webpack.HotModuleReplacementPlugin()
-    generatedWebpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+    // add plugins incl webpack.HotModuleReplacementPlugin()
+    generatedWebpackConfig.plugins.push(
+      new webpack.HotModuleReplacementPlugin(),
+      ...TASKSCONFIG.javascripts.development.plugins,
+    );
+
+    // add optimization
+    generatedWebpackConfig.optimization = {
+      ...TASKSCONFIG.javascripts.development.optimization,
+    };
   }
 
   // devtool
